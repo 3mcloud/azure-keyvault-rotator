@@ -1,5 +1,3 @@
-# KeyVault-Rotation-SQLPassword-Csharp
-
 ## Key Vault Rotation Functions
 
 This project has one function that will rotate any secret as long as it is defined how to rotate that password. 
