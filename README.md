@@ -15,6 +15,11 @@ You can create new secret with above tags and SQL Password as value or add those
 
 Functions are using Function App identity to access Key Vault and existing secret "CredentialId" tag with sql admin login and value with sql admin password to access SQL server.
 
+This project follows the following tutorial example
+https://docs.microsoft.com/en-us/azure/key-vault/secrets/tutorial-rotation-dual
+
+![](C:\Users\a90q9zz\git\azure-keyvault-rotator\docs\architecture.png)
+
 ## Rotation Setup - ARM Templates
 Steps for setting up the function are outlined in the arm-templates\deploy.sh file. 
 
