@@ -16,7 +16,7 @@ Functions are using Function App identity to access Key Vault and existing secre
 This project follows the following tutorial example
 https://docs.microsoft.com/en-us/azure/key-vault/secrets/tutorial-rotation-dual
 
-![](docs\architecture.png)
+![](https://github.com/3mcloud/azure-keyvault-rotator/blob/main/docs/architecture.png)
 
 ## Rotation Setup - ARM Templates
 Steps for setting up the function are outlined in the arm-templates\deploy.sh file. 
