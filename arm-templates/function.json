@@ -1,0 +1,153 @@
+{  
+  "$schema":"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion":"1.0.0.0",
+  "parameters":{  
+        "keyVaultName": {
+            "defaultValue": "akvrotation-kv",
+            "type": "String",
+            "metadata": {
+                "description": "Key Vault name where password is stored."
+            }
+        },
+        "functionAppName": {
+            "defaultValue": "akvrotation-fnapp",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the function app that you wish to create."
+            }
+		}
+  },
+  "variables":{  
+     "functionStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]"
+  },
+  "resources":[  
+     {  
+        "type":"Microsoft.Storage/storageAccounts",
+        "apiVersion":"2019-04-01",
+        "name": "[variables('functionStorageAccountName')]",
+        "location":"[resourceGroup().location]",
+        "sku":{  
+           "name":"Standard_LRS",
+           "tier":"Standard"
+        },
+        "kind":"Storage"
+     },
+     {  
+        "type":"Microsoft.Web/serverfarms",
+        "apiVersion":"2018-02-01",
+        "name":"[concat(parameters('functionAppName'))]",
+        "location":"[resourceGroup().location]",
+        "sku":{  
+           "name": "Y1",
+           "tier": "Dynamic"
+        },
+        "properties": {
+                "name": "[parameters('functionAppName')]",
+                "computeMode": "Dynamic"
+        }
+     },
+     {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('functionAppName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('functionAppName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('functionStorageAccountName'))]"
+            ],
+            "kind": "functionapp",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "enabled": true,
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('functionAppName'))]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('functionStorageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('functionStorageAccountName')), '2019-06-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~3"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "dotnet"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('functionStorageAccountName'), ';EndpointSuffix=', environment().suffixes.storage, ';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('functionStorageAccountName')), '2019-06-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[toLower(parameters('functionAppName'))]"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "~10"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('microsoft.insights/components', parameters('functionAppName')), '2018-05-01-preview').InstrumentationKey]"
+                        }
+                    ]
+                }
+            }
+            // "resources": [
+            //     // {
+            //     //     "type": "sourcecontrols",
+            //     //     "apiVersion": "2018-11-01",
+            //     //     "name": "web",
+            //     //     "dependsOn": [
+            //     //         "[resourceId('Microsoft.Web/Sites', parameters('functionAppName'))]"
+            //     //     ],
+            //     //     "properties": {
+            //     //         "RepoUrl": "[parameters('repoURL')]",
+            //     //         "branch": "master",
+            //     //         "IsManualIntegration": true
+            //     //     }
+            //     // }
+            // ]
+     },
+     {
+            "type": "microsoft.insights/components",
+            "apiVersion": "2018-05-01-preview",
+            "name": "[parameters('functionAppName')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "[concat('hidden-link:', resourceId('Microsoft.Web/sites', parameters('functionAppName')))]": "Resource"
+            },
+            "properties": {
+                "ApplicationId": "[parameters('functionAppName')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+     },
+     {
+            "type": "Microsoft.KeyVault/vaults/accessPolicies",
+            "apiVersion": "2018-02-14",
+            "name": "[concat(parameters('keyVaultName'), '/add')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
+            ],
+            "properties": {
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[reference(resourceId('Microsoft.Web/sites', parameters('functionAppName')),'2019-08-01', 'Full').identity.principalId]",
+                        "permissions": {
+                            "keys": [],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set"
+                            ],
+                            "certificates": []
+                        }
+                    }
+                ]
+            }
+	}
+  ]
+}

@@ -1,0 +1,57 @@
+{  
+  "$schema":"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion":"1.0.0.0",
+  "parameters":{  
+        "keyVaultName": {
+            "defaultValue": "akvrotation-kv",
+            "type": "String",
+            "metadata": {
+                "description": "Key Vault name where password is stored."
+            }
+        },
+        "functionAppName": {
+            "defaultValue": "akvrotation-fnapp",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the function app that you wish to create."
+            }
+		},
+		"secretName": {
+            "defaultValue": "sqlPassword",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the secret where sql password is stored."
+            }
+        }
+  },
+  "variables":{  
+	 "eventSubscriptionName": "[concat(parameters('keyVaultName'),'-',parameters('secretName'),'-',parameters('functionAppName'))]"
+  },
+  "resources":[  
+    {
+            "type": "Microsoft.KeyVault/vaults/providers/eventSubscriptions",
+            "apiVersion": "2020-01-01-preview",
+            "name": "[concat(parameters('keyVaultName'),'/Microsoft.EventGrid/',variables('eventSubscriptionName'))]",
+            "location": "[resourceGroup().location]",
+            // "dependsOn": [
+            //     // "[concat('Microsoft.Web/sites/', parameters('functionAppName'),'/sourcecontrols/web')]"
+            // ],
+            "properties": {
+                "destination": {
+                    "endpointType": "AzureFunction",
+                    "properties": {
+                        "maxEventsPerBatch": 1,
+                        "preferredBatchSizeInKilobytes": 64,
+                        "resourceId": "[concat(resourceId('Microsoft.Web/sites', parameters('functionAppName')),'/functions/AKVSecretRotation')]"
+                    }
+                },
+                "filter": {
+					"subjectBeginsWith": "[parameters('secretName')]",
+      				"subjectEndsWith": "[parameters('secretName')]",
+					"includedEventTypes": ["Microsoft.KeyVault.SecretNearExpiry"]
+					
+                }
+            }
+        }
+  ]
+}
