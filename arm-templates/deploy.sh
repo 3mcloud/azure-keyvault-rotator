@@ -1,10 +1,10 @@
 # Deploy the Rotator
-az deployment group create --name StorageAccountRotatorFunction --resource-group project-breathe-3m --template-file function.json  --parameters keyVaultName=kv-projectbreathe-3m functionAppName=breathekeyrotator secretName=projectbreathe3mdata-sas
+az deployment group create --name RotatorFunction --resource-group <rg> --template-file function.json  --parameters keyVaultName=<keyVaultName> functionAppName=<functionAppName> secretName=<secretName>
 
 # deploy the function app code
-func azure functionapp publish breathekeyrotator
+func azure functionapp publish <functionAppName>
 
 # Deploy the Event listener for the secret you want to rotate
-az deployment group create --name StorageAccountRotatorEventSubscription --resource-group project-breathe-3m --template-file events.json  --parameters keyVaultName=kv-projectbreathe-3m functionAppName=breathekeyrotator secretName=projectbreathe3mdata-sas
+az deployment group create --name RotatorEventSubscription --resource-group <rg> --template-file events.json  --parameters keyVaultName=<keyVaultName> functionAppName=<functionAppName> secretName=<secretName>
 
 
