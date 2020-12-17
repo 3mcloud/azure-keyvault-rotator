@@ -1,17 +1,18 @@
 ﻿using Azure.Security.KeyVault.Secrets;
 using System;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Microsoft.KeyVault
 {
     public abstract class SecretRotator
     {
-        protected abstract string GenerateSecret(Secret secret, ILogger log);
+        protected abstract Task<string> GenerateSecret(Secret secret, ILogger log);
 
-        public void RotateSecret(Secret secret, ILogger log)
+        public async Task RotateSecretAsync(Secret secret, ILogger log)
         {
             // Generate new secret value
-            string newSecretValue = this.GenerateSecret(secret, log);
+            string newSecretValue = await this.GenerateSecret(secret, log);
             log.LogInformation("New Password Generated");
 
             //Add secret version with new password to Key Vault

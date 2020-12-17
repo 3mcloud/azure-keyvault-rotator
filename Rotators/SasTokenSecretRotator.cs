@@ -5,6 +5,7 @@ using Azure.Storage.Sas;
 using Azure.ResourceManager.Storage;
 using System.Linq;
 using Azure.Storage;
+using System.Threading.Tasks;
 
 namespace Microsoft.KeyVault
 {
@@ -12,7 +13,7 @@ namespace Microsoft.KeyVault
     {
         public const string SecretType = "StorageAccountSAS";
 
-        protected override string GenerateSecret(Secret secret, ILogger log)
+        protected override async Task<string> GenerateSecret(Secret secret, ILogger log)
         {
             log.LogInformation($"Resource Name: {secret.ResourceName}");
             log.LogInformation($"Resource Group Name: {secret.ResourceGroupName}");

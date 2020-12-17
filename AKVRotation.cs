@@ -12,7 +12,7 @@ namespace Microsoft.KeyVault
     public static class AKVRotation
     {
         [FunctionName("AKVSecretRotation")]
-        public static void Run([EventGridTrigger]EventGridEvent eventGridEvent, ILogger log)
+        public static async System.Threading.Tasks.Task RunAsync([EventGridTrigger]EventGridEvent eventGridEvent, ILogger log)
         {
             log.LogInformation("C# Event trigger function processed a request.");
             var secretName = eventGridEvent.Subject;
@@ -26,7 +26,8 @@ namespace Microsoft.KeyVault
 
             var rotatorMapper = new Dictionary<string, SecretRotator>
             {
-                { SasTokenSecretRotator.SecretType, new SasTokenSecretRotator() }
+                { SasTokenSecretRotator.SecretType, new SasTokenSecretRotator() },
+                { ServicePrincipalRotator.SecretType, new ServicePrincipalRotator() }
             };
 
             if (!rotatorMapper.TryGetValue(secret.Type, out var secretRotator))
@@ -35,7 +36,7 @@ namespace Microsoft.KeyVault
                 return;
             }
 
-            secretRotator.RotateSecret(secret, log);
+            await secretRotator.RotateSecretAsync(secret, log);
         }
     }
 }
