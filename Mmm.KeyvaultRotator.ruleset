@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules for analyzers" Description="" ToolsVersion="Current">
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.FxCopAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.FxCopAnalyzers">
+  </Rules>
+</RuleSet>

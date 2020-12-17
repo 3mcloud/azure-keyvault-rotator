@@ -1,14 +1,18 @@
-using Azure.Security.KeyVault.Secrets;
+// <copyright file="Secret.cs" company="3M">
+// Copyright (c) 3M. All rights reserved.
+// </copyright>
+
 using System;
-using Azure.Identity;
 using System.Collections.Generic;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 
 namespace Microsoft.KeyVault
 {
     public class Secret
     {
-		private const string SecretTypeTagKey = "SecretType";
-		private const string ResourceNameTagKey = "ResourceName";
+        private const string SecretTypeTagKey = "SecretType";
+        private const string ResourceNameTagKey = "ResourceName";
         private const string ResourceGroupNameTagKey = "ResourceGroupName";
         private const string SubscriptionIdTagKey = "SubscriptionId";
         private const string ValidityPeriodDaysTagKey = "ValidityPeriodDays";
@@ -17,7 +21,7 @@ namespace Microsoft.KeyVault
         public Secret(string secretName, string keyVaultName)
         {
             var kvUri = "https://" + keyVaultName + ".vault.azure.net";
-            this.Client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential(includeInteractiveCredentials:true));
+            this.Client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential(includeInteractiveCredentials: true));
             this.keyVaultSecret = this.Client.GetSecret(secretName);
         }
 
@@ -27,7 +31,7 @@ namespace Microsoft.KeyVault
         {
             get
             {
-                return keyVaultSecret.Properties.Tags;
+                return this.keyVaultSecret.Properties.Tags;
             }
         }
 
@@ -35,7 +39,7 @@ namespace Microsoft.KeyVault
         {
             get
             {
-                return this.Tags.ContainsKey(SecretTypeTagKey) ? this.Tags[SecretTypeTagKey] : "";
+                return this.Tags.ContainsKey(SecretTypeTagKey) ? this.Tags[SecretTypeTagKey] : string.Empty;
             }
         }
 
@@ -59,7 +63,7 @@ namespace Microsoft.KeyVault
         {
             get
             {
-                return this.Tags.ContainsKey(ResourceNameTagKey) ? this.Tags[ResourceNameTagKey] : "";
+                return this.Tags.ContainsKey(ResourceNameTagKey) ? this.Tags[ResourceNameTagKey] : string.Empty;
             }
         }
 
@@ -67,7 +71,7 @@ namespace Microsoft.KeyVault
         {
             get
             {
-                return this.Tags.ContainsKey(ResourceGroupNameTagKey) ? this.Tags[ResourceGroupNameTagKey] : "";
+                return this.Tags.ContainsKey(ResourceGroupNameTagKey) ? this.Tags[ResourceGroupNameTagKey] : string.Empty;
             }
         }
 
@@ -75,7 +79,7 @@ namespace Microsoft.KeyVault
         {
             get
             {
-                return this.Tags.ContainsKey(SubscriptionIdTagKey) ? this.Tags[SubscriptionIdTagKey] : "";
+                return this.Tags.ContainsKey(SubscriptionIdTagKey) ? this.Tags[SubscriptionIdTagKey] : string.Empty;
             }
         }
     }

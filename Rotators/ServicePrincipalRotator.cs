@@ -1,15 +1,14 @@
+// <copyright file="ServicePrincipalRotator.cs" company="3M">
+// Copyright (c) 3M. All rights reserved.
+// </copyright>
+
 using System;
-using Microsoft.Extensions.Logging;
-using Azure.Identity;
-using Azure.Storage.Sas;
-using Azure.ResourceManager.Storage;
-using System.Linq;
-using Azure.Storage;
-using Microsoft.Azure.Services.AppAuthentication;
-using System.Threading.Tasks;
-using Microsoft.Graph;
-using Azure.Core;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.Graph;
 
 namespace Microsoft.KeyVault
 {
@@ -42,7 +41,7 @@ namespace Microsoft.KeyVault
             var passwordCredential = new PasswordCredential
             {
                 DisplayName = "Automatic Key Rotation Version",
-                EndDateTime = DateTimeOffset.UtcNow.AddDays(int.Parse(secret.ValidityPeriodDays) - 29)
+                EndDateTime = DateTimeOffset.UtcNow.AddDays(int.Parse(secret.ValidityPeriodDays) - 29),
             };
             var servicePrincipalKey = await graphServiceClient.Applications[secret.ResourceName].AddPassword(passwordCredential).Request().PostAsync();
             return servicePrincipalKey.SecretText;
