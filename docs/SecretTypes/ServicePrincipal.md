@@ -1,5 +1,5 @@
 ﻿
-# StorageAccountSAS
+# ServicePrincipal
 This Secret Type uses managed identity to rotate the Service Principals client key
 
 ## Tags
