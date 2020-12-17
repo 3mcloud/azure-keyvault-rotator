@@ -22,13 +22,7 @@ https://docs.microsoft.com/en-us/azure/key-vault/secrets/tutorial-rotation-dual
 Steps for setting up the function are outlined in the arm-templates\deploy.sh file. 
 
 ## Secret Types
-The following are the implemented secret types
-### StorageAccountSAS
-required tags:
-- ResourceName
-- ResourceGroupName
-- SubscriptionId
-- ValidityPeriodDaysTag
-
-This Secret Type uses managed identity to rotate the SAS token so the rotator function needs to be permitted access to read its account key
+The following are the implemented secret types:
+- [StorageAccountSAS](docs/SecretTypes/StorageAccountSAS.md)
+- [ServicePrincipal](docs/SecretTypes/ServicePrincipal.md)
 
