@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyVault-Rotation-Csharp", "KeyVault-Rotation-Csharp.csproj", "{7C08C509-6F4C-4385-80F5-E4D674CFBFA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault-Rotation-cs-Tests", "tests\KeyVault-Rotation-cs-Tests\KeyVault-Rotation-cs-Tests.csproj", "{74864078-F2BA-42CB-B83B-E80A47500016}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7C08C509-6F4C-4385-80F5-E4D674CFBFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C08C509-6F4C-4385-80F5-E4D674CFBFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C08C509-6F4C-4385-80F5-E4D674CFBFA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74864078-F2BA-42CB-B83B-E80A47500016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74864078-F2BA-42CB-B83B-E80A47500016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74864078-F2BA-42CB-B83B-E80A47500016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74864078-F2BA-42CB-B83B-E80A47500016}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
