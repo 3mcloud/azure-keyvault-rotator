@@ -1,4 +1,7 @@
-﻿namespace Functions.Tests
+﻿// <copyright file="ListLogger.cs" company="3M">
+// Copyright (c) 3M. All rights reserved.
+// </copyright>
+namespace Functions.Tests
 {
     using Microsoft.Azure.EventGrid.Models;
     using Microsoft.Extensions.Logging;

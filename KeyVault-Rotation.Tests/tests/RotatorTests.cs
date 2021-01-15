@@ -1,4 +1,6 @@
-
+// <copyright file="RotatorTests.cs" company="3M">
+// Copyright (c) 3M. All rights reserved.
+// </copyright>
 
 namespace KeyVault_Rotation_cs_Tests
 {
