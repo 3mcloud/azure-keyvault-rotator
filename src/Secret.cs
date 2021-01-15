@@ -22,6 +22,8 @@ namespace Microsoft.KeyVault
         {
             var kvUri = "https://" + keyVaultName + ".vault.azure.net";
             this.Client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential(includeInteractiveCredentials: true));
+
+            // TODO: figure out a way to make this code more unit testable. Serialization<fake> of this type causes ext az calls
             this.keyVaultSecret = this.Client.GetSecret(secretName);
         }
 
