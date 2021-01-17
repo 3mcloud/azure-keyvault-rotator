@@ -9,10 +9,17 @@ namespace KeyVault_Rotation_cs_Tests
     using Microsoft.KeyVault;
     using System.Linq;
     using Xunit;
+    using Xunit.Abstractions;
 
     public class RotatorTests
     {
 
+        private readonly ITestOutputHelper output;
+
+        public RotatorTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
         private readonly ILogger logger = TestFactory.CreateLogger(LoggerTypes.List);
 
         [Fact]
@@ -28,7 +35,7 @@ namespace KeyVault_Rotation_cs_Tests
             var foo = ((ListLogger)logger).Logs.AsEnumerable<string>();
 
 
-            Assert.Collection<string>(foo, 
+            Assert.Collection<string>(foo,
                 s => Assert.Equal("C# Event trigger function processed a request.", s),
                 s => Assert.Equal("Secret Name: foo", s),
                 s => Assert.Equal("Key Vault Name: ", s),
@@ -56,9 +63,37 @@ namespace KeyVault_Rotation_cs_Tests
             egEvent.Data = TestFactory.GetEventGridData(string.Empty);
             // TODO: do we need validation of the secret version at all?
             // TODO: this still results in an actual HTTP call.
-            var ex = await Assert.ThrowsAsync<Azure.RequestFailedException>(() =>
-                AKVRotation.RunAsync(egEvent, logger));
+            //var ex = await Assert.ThrowsAsync<Azure.RequestFailedException>(() =>
+            //    AKVRotation.RunAsync(egEvent, logger));
+
+            var exceptions = new System.Collections.Generic.List<System.Type>()
+            {
+                typeof(Azure.Identity.AuthenticationFailedException),
+                typeof(Azure.RequestFailedException),
+            };
+
+            var ex = await Assert.ThrowsAnyAsync<System.Exception>(() => AKVRotation.RunAsync(egEvent, logger));
+
+            output.WriteLine($"actual exception was {ex.GetType().ToString()} ");
+            Assert.Contains(ex.GetType(), exceptions);
+
+            // NOTE: the following two won't work as depending upon environment
+            // the first case if there is a remnant of az config an AuthN fails
+            // the second occurs in a printine environment
+            // ideally Secret can be separated to be a pure DTO and a SecretManager class
+            // created alongside to initiate the "validate" or actual call to Azure.
+            // await Assert.ThrowsAnyAsync<Azure.Identity.AuthenticationFailedException>( () => {
+            //     var ex = AKVRotation.RunAsync(egEvent, logger);
+            //     return ex;
+            // });
+
+            // await Assert.ThrowsAnyAsync<Azure.RequestFailedException>( () => {
+            //     var ex = AKVRotation.RunAsync(egEvent, logger);
+            //     return ex;
+            // });
         }
 
     }
+
 }
+

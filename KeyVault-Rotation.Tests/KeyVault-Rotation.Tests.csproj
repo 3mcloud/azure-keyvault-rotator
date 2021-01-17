@@ -5,6 +5,7 @@
     <RootNamespace>KeyVault_Rotation.Tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
