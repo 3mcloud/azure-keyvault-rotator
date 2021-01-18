@@ -27,6 +27,7 @@ namespace KeyVault_Rotation_cs_Tests
         // The STDIO streams did not close within 10 seconds of the exit event
         // from process 'C:\Program Files\dotnet\dotnet.exe'. 
         //This may indicate a child process inherited the STDIO streams and has not yet exited.
+        #pragma warning disable xUnit1013 
         public void Dispose()
         {
             if (disposed)
