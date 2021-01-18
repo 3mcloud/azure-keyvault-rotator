@@ -14,11 +14,33 @@ namespace KeyVault_Rotation_cs_Tests
     public class RotatorTests
     {
 
-        private readonly ITestOutputHelper output;
+        private ITestOutputHelper output;
+        private bool disposed = false;
 
         public RotatorTests(ITestOutputHelper output)
         {
             this.output = output;
+        }
+
+        // NOTE: implemented to alleviate timeout on windows hosted agents
+        // was timing out on STDIO with message:
+        // The STDIO streams did not close within 10 seconds of the exit event
+        // from process 'C:\Program Files\dotnet\dotnet.exe'. 
+        //This may indicate a child process inherited the STDIO streams and has not yet exited.
+        public void Dispose()
+        {
+            if (disposed)
+                throw new System.ObjectDisposedException(GetType().FullName);
+
+            this.disposed = true;
+
+            var messageBux = output as Xunit.Sdk.MessageBus;
+            if (null != messageBux)
+            {
+                messageBux.Dispose();
+                this.output = null;
+            }
+
         }
         private readonly ILogger logger = TestFactory.CreateLogger(LoggerTypes.List);
 

@@ -45,7 +45,7 @@ stages:
       displayName: 'dotnet build $(imageName) --configuration $(buildConfiguration)'
 
       # below job has timeout as under windows the test step has been running way too long inconsitently
-      # TODO: task is publishing test results automatically
+      # NOTE: task is publishing test results automatically
     - task: DotNetCoreCLI@2
       timeoutInMinutes: ${{parameters.jobtimeout}}
       inputs:
