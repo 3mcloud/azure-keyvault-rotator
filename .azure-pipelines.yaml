@@ -1,3 +1,4 @@
+name: azure-keyvault-rotation-tool-csharp
 trigger:
   - main
 pr:
