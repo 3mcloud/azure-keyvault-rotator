@@ -1,0 +1,90 @@
+name: azure-keyvault-rotation-tool-csharp
+trigger:
+  - main
+pr:
+  - main
+
+parameters:
+- name: jobtimeout
+  type: number
+  default: 2
+
+stages:
+- stage: 'buildtestpackage'
+  displayName: 'Keyvault Rotation tool'
+  
+  jobs:
+  - job: 'keyvault_rot_stage'
+    displayName: 'Keyvault Rotation tool job'
+
+    strategy:
+      matrix:
+        linuxlts:
+          imageName: 'ubuntu-18.04'
+        linux:
+          imageName: 'ubuntu-20.04'
+        windows:
+          imageName: 'windows-latest'
+
+    pool:
+      vmImage: $(imageName)
+
+    variables:
+      buildConfiguration: 'Release'
+
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: restore
+        arguments: KeyVault-Rotation-Csharp.sln
+      displayName: 'dotnet restore packages  $(imageName)'
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: build
+        arguments: 'KeyVault-Rotation-Csharp.sln --no-restore --configuration $(buildConfiguration)'
+      displayName: 'dotnet build $(imageName) --configuration $(buildConfiguration)'
+
+      # below job has timeout as under windows the test step has been running way too long inconsitently
+      # NOTE: task is publishing test results automatically
+    - task: DotNetCoreCLI@2
+      timeoutInMinutes: ${{parameters.jobtimeout}}
+      inputs:
+        command: test
+        publishTestResults: true  #--logger trx --results-directory $(Agent.TempDirectory)
+        arguments: 'KeyVault-Rotation-Csharp.sln --configuration $(buildConfiguration) --no-build --no-restore --verbosity normal --logger "console;verbosity=detailed" --collect:"XPlat Code Coverage"'
+      displayName: 'dotnet test $(imageName) --configuration $(buildConfiguration)'
+
+    - task: CmdLine@2
+      inputs:
+        script: 'ls -alt $(Agent.TempDirectory)/**/coverage.cobertura.xml'
+      displayName: 'list coverage xml files'
+
+    - task: PublishCodeCoverageResults@1
+      name: 'coverage'
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+        failIfCoverageEmpty: false
+      displayName: 'publish code coverage'
+
+    # test task is publishing trx
+    # - task: PublishTestResults@2
+    #   name: 'vstest'
+    #   displayName: 'publish trx format'
+    #   inputs:
+    #     testResultsFormat: 'VSTest'
+    #     testResultsFiles: '$(Agent.TempDirectory)/*.trx'
+
+    - task: DotNetCoreCLI@2
+      name: funcdeploy
+      displayName: 'create function deploy outupt'
+      inputs:
+        command: pack
+        arguments: KeyVault-Rotation-Csharp.sln --configuration $(buildConfiguration) --no-build --no-restore --verbosity normal
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        ArtifactName: 'keyvault-rotator-$(imagename)'
+        targetPath: ./src/bin/$(buildConfiguration)/netcoreapp3.1/publish/
+        artifactType: pipeline

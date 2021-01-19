@@ -1,0 +1,38 @@
+{
+    "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+    "settings": {
+        "indentation": {
+        },
+        "spacingRules": {
+        },
+        "readabilityRules": {
+        },
+        "orderingRules": {
+            "usingDirectivesPlacement": "outsideNamespace",
+            "blankLinesBetweenUsingGroups": "omit"
+        },
+        "namingRules": {
+            "allowedHungarianPrefixes": []
+        },
+        "maintainabilityRules": {
+            "topLevelTypes": [
+                "class",
+                "interface",
+                "struct",
+                "enum"
+            ]
+        },
+        "layoutRules": {
+            "newlineAtEndOfFile": "omit"
+        },
+        "documentationRules": {
+            "companyName": "3M",
+            "documentInterfaces": false,
+            "documentExposedElements": false,
+            "documentInternalElements": false,
+            "documentPrivateElements": false,
+            "documentPrivateFields": false,
+            "fileNamingConvention": "stylecop"
+        }
+    }
+}

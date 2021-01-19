@@ -1,0 +1,33 @@
+name: .NET and Core Build with Tests
+
+on:
+  push:
+    # branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        dotnet: [3.1.x]
+
+    env:
+      config: 'Debug'
+      AZURE_CONFIG_DIR: /dev/null
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ matrix.dotnet}}
+
+    - name: Restore dependencies
+      run: dotnet restore KeyVault-Rotation-Csharp.sln
+    - name: Build
+      run: dotnet build KeyVault-Rotation-Csharp.sln --no-restore
+    - name: Test
+      run: dotnet test KeyVault-Rotation-Csharp.sln --no-build --verbosity normal --logger "trx" --logger "console;verbosity=detailed" --collect:"XPlat Code Coverage"
