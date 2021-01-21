@@ -1,17 +1,25 @@
 ﻿
 # ServicePrincipal
+
 This Secret Type uses managed identity to rotate the Service Principals client key
 
 ## Tags
+
 required tags:
+
 - ResourceName (This will be the Object Id to the service principal to rotate. Note, this is not the app id, but the object id.)
 
 optional tags:
-- ValidityPeriodDaysTag (default 37 days, rotates after 7)
+
+- ValidityPeriodDays (default 37 days, rotates after 7)
+- ExpiresInDays (defaults to ValidityPeriodDays minus 29)
 
 ## Setup
+
 You must run two scripts.
+
 1. This script must be run by a AAD directory Global Administrator. It will add the appropriate MS Graph permissions for the MSI identity
+
 ```bash
 Connect-AzureAD
 $msiObjectId = "<MSI_Object_Id>"
@@ -42,6 +50,7 @@ Get-AzureADServiceAppRoleAssignedTo -ObjectId $msiObjectId
 ```
 
 2. This script must be run by an application owner that already exists on the AD app registration. This will add the MSI object as owner of the application
+
 ```bash
 Connect-AzureAD
 Connect-AzureRmAccount

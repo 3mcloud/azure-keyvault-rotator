@@ -7,6 +7,7 @@ namespace KeyVault_Rotation_cs_Tests
     using Functions.Tests;
     using Microsoft.Extensions.Logging;
     using Microsoft.KeyVault;
+    using Moq;
     using System.Linq;
     using Xunit;
     using Xunit.Abstractions;
@@ -116,7 +117,49 @@ namespace KeyVault_Rotation_cs_Tests
             // });
         }
 
-    }
+        [Fact]
+        public async void negative_validity_throws_exception()
+        {
+            // Arrange
+            Mock<ISecret> mockSecret = new Mock<ISecret>();
+            mockSecret.Setup(m => m.ValidityPeriodDays).Returns("-1");
 
+            var rotator = new ServicePrincipalRotator();
+
+            // Act and Assert
+            var ex = await Assert.ThrowsAsync<InvalidSecretException>(() =>
+                    rotator.RotateSecretAsync(mockSecret.Object, logger));
+        }
+
+        [Fact]
+        public async void negative_expires_throws_exception()
+        {
+            // Arrange
+            Mock<ISecret> mockSecret = new Mock<ISecret>();
+            mockSecret.Setup(m => m.ValidityPeriodDays).Returns("-1");
+
+            var rotator = new ServicePrincipalRotator();
+
+            // Act and Assert
+            var ex = await Assert.ThrowsAsync<InvalidSecretException>(() =>
+                    rotator.RotateSecretAsync(mockSecret.Object, logger));
+        }
+
+        [Fact]
+        public async void secret_expires_before_invalid_throws_exception()
+        {
+            // Arrange
+            Mock<ISecret> mockSecret = new Mock<ISecret>();
+            mockSecret.Setup(m => m.ValidityPeriodDays).Returns("60");
+            mockSecret.Setup(m => m.ExpiresInDays).Returns("20");
+
+            var rotator = new ServicePrincipalRotator();
+
+            // Act and Assert
+            var ex = await Assert.ThrowsAsync<SecretExpiresBeforeRotationException>(() =>
+                    rotator.RotateSecretAsync(mockSecret.Object, logger));
+        }
+
+    }
 }
 

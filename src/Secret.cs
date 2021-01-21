@@ -9,13 +9,14 @@ using Azure.Security.KeyVault.Secrets;
 
 namespace Microsoft.KeyVault
 {
-    public class Secret
+    public class Secret : ISecret
     {
         private const string SecretTypeTagKey = "SecretType";
         private const string ResourceNameTagKey = "ResourceName";
         private const string ResourceGroupNameTagKey = "ResourceGroupName";
         private const string SubscriptionIdTagKey = "SubscriptionId";
         private const string ValidityPeriodDaysTagKey = "ValidityPeriodDays";
+        private const string ExpiresInDaysTagKey = "ExpiresInDays";
         private KeyVaultSecret keyVaultSecret;
 
         public Secret(string secretName, string keyVaultName)
@@ -50,6 +51,15 @@ namespace Microsoft.KeyVault
             get
             {
                 return this.Tags.ContainsKey(ValidityPeriodDaysTagKey) ? this.Tags[ValidityPeriodDaysTagKey] : "37";
+            }
+        }
+
+        public string ExpiresInDays
+        {
+            get
+            {
+                // default is one day after rotation, which occurs 30 days before validity date expires.
+                return this.Tags.ContainsKey(ExpiresInDaysTagKey) ? this.Tags[ExpiresInDaysTagKey] : $"{int.Parse(this.ValidityPeriodDays) - 29}";
             }
         }
 

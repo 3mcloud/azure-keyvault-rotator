@@ -38,7 +38,16 @@ namespace Microsoft.KeyVault
                 return;
             }
 
-            await secretRotator.RotateSecretAsync(secret, log);
+            try
+            {
+                await secretRotator.RotateSecretAsync(secret, log);
+            }
+            catch (InvalidSecretException e)
+            {
+                log.LogError("Error occurred during rotation");
+                log.LogError(e.Message);
+                throw e;
+            }
         }
     }
 }

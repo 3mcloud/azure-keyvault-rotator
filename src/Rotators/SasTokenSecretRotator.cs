@@ -17,12 +17,12 @@ namespace Microsoft.KeyVault
     {
         public const string SecretType = "StorageAccountSAS";
 
-        protected override async Task<string> GenerateSecret(Secret secret, ILogger log)
+        protected override async Task<string> GenerateSecret(ISecret secret, ILogger log)
         {
             log.LogInformation($"Resource Name: {secret.ResourceName}");
             log.LogInformation($"Resource Group Name: {secret.ResourceGroupName}");
             log.LogInformation($"Subscription Id: {secret.SubscriptionId}");
-            log.LogInformation($"Validity Period (days): {secret.ValidityPeriodDays}");
+            log.LogInformation($"Expires In (days): {secret.ExpiresInDays}");
 
             var creds = new DefaultAzureCredential(includeInteractiveCredentials: true);
             StorageManagementClient managementClient = new StorageManagementClient(secret.SubscriptionId, creds);
@@ -32,7 +32,7 @@ namespace Microsoft.KeyVault
             {
                 Services = AccountSasServices.Blobs,
                 ResourceTypes = AccountSasResourceTypes.Service,
-                ExpiresOn = DateTimeOffset.UtcNow.AddDays(int.Parse(secret.ValidityPeriodDays) - 29), // Make sure it is valid at least a day after rotating
+                ExpiresOn = DateTimeOffset.UtcNow.AddDays(int.Parse(secret.ExpiresInDays)),
                 Protocol = SasProtocol.Https,
             };
 

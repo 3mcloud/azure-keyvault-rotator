@@ -16,10 +16,10 @@ namespace Microsoft.KeyVault
     {
         public const string SecretType = "ServicePrincipal";
 
-        protected override async Task<string> GenerateSecret(Secret secret, ILogger log)
+        protected override async Task<string> GenerateSecret(ISecret secret, ILogger log)
         {
             log.LogInformation($"Resource Name: {secret.ResourceName}");
-            log.LogInformation($"Validity Period (days): {secret.ValidityPeriodDays}");
+            log.LogInformation($"Expires In (days): {secret.ExpiresInDays}");
 
             // Create the Microsoft Graph service client with a DefaultAzureCredential class, which gets an access token by using the available Managed Identity.
             var credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
@@ -41,7 +41,7 @@ namespace Microsoft.KeyVault
             var passwordCredential = new PasswordCredential
             {
                 DisplayName = "Automatic Key Rotation Version",
-                EndDateTime = DateTimeOffset.UtcNow.AddDays(int.Parse(secret.ValidityPeriodDays) - 29),
+                EndDateTime = DateTimeOffset.UtcNow.AddDays(int.Parse(secret.ExpiresInDays)),
             };
             var servicePrincipalKey = await graphServiceClient.Applications[secret.ResourceName].AddPassword(passwordCredential).Request().PostAsync();
             return servicePrincipalKey.SecretText;
