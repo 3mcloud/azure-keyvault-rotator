@@ -1,0 +1,115 @@
+<mxfile host="65bd71144e" modified="2021-01-21T22:26:11.054Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.52.1 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36" etag="kzJ4tWEjyk7LB6JPhFlY" version="13.10.0" type="embed">
+    <diagram id="O8eUx6FTnqkNmjxZ3piM" name="Page-1">
+        <mxGraphModel dx="1365" dy="997" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="140" width="790" height="570" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-1" value="Rotator Function" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Functions.svg;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="180" width="50" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-6" value="Event Grid Topic&lt;br&gt;expiring-secrets" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Event_Grid_Topics.svg;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="180" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-7" value="Azure Key Vault" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Key_Vaults.svg;strokeColor=#FFF2CC;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="360" width="48" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-8" value="" style="pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#515151;shape=mxgraph.mscae.system_center.roles" parent="1" vertex="1">
+                    <mxGeometry x="100" y="570" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-12" value="" style="endArrow=classic;html=1;strokeWidth=4;fillColor=#fff2cc;strokeColor=#d6b656;exitX=0.49;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="X1OkybMB0tRwm0m5DTfr-7" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="124" y="350" as="sourcePoint"/>
+                        <mxPoint x="123.5" y="268" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-16" value="" style="endArrow=classic;html=1;strokeWidth=4;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="160" y="210" as="sourcePoint"/>
+                        <mxPoint x="320" y="210" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-17" value="" style="endArrow=classic;startArrow=classic;html=1;strokeWidth=4;fillColor=#dae8fc;strokeColor=#6c8ebf;exitX=0.317;exitY=-0.012;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="X1OkybMB0tRwm0m5DTfr-8" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="530" y="520" as="sourcePoint"/>
+                        <mxPoint x="120" y="430" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-18" value="" style="endArrow=classic;startArrow=classic;html=1;strokeWidth=4;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" target="X1OkybMB0tRwm0m5DTfr-19" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="353" y="250" as="sourcePoint"/>
+                        <mxPoint x="350.98" y="250" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-19" value="Azure Active Directory" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.azure_active_directory;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="440" width="47.5" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-20" value="" style="endArrow=classic;html=1;strokeWidth=4;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="310" y="250" as="sourcePoint"/>
+                        <mxPoint x="150" y="370" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-21" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#d6b656;labelBackgroundColor=none;fillColor=#fff2cc;" parent="1" vertex="1">
+                    <mxGeometry x="137" y="300" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-22" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#d6b656;labelBackgroundColor=none;fillColor=#fff2cc;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="170" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-23" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#d6b656;labelBackgroundColor=none;fillColor=#fff2cc;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="310" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-24" value="4" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#d6b656;labelBackgroundColor=none;fillColor=#fff2cc;" parent="1" vertex="1">
+                    <mxGeometry x="243" y="310" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-25" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#d6b656;labelBackgroundColor=none;fillColor=#fff2cc;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="191.5" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-26" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#d6b656;labelBackgroundColor=none;fillColor=#fff2cc;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="230" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-27" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#d6b656;labelBackgroundColor=none;fillColor=#fff2cc;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="268" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-28" value="4" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#d6b656;labelBackgroundColor=none;fillColor=#fff2cc;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="310" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-29" value="Key vault issues an alert 30 days before key expires" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="193.5" width="190" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-30" value="Event Grid triggers Azure Function" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="233" width="190" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-31" value="Azure function rotates the secret using managed identity" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="271" width="190" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-32" value="Updates the secret in key vault with new expiration time" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="313" width="190" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-33" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#6c8ebf;labelBackgroundColor=none;fillColor=#dae8fc;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="387" width="23" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-34" value="Service maintains local copy of key by checking key vault for a new one before it expires" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="390" width="270" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-35" value="Old Secret" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="360" y="565" width="280" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-36" value="New Secret" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="540" y="595" width="280" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-37" value="" style="endArrow=classic;html=1;strokeWidth=1;entryX=0.629;entryY=-0.133;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="X1OkybMB0tRwm0m5DTfr-35" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="530" y="520" as="sourcePoint"/>
+                        <mxPoint x="580" y="470" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="X1OkybMB0tRwm0m5DTfr-38" value="Event triggers 30 days before expires" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="500" width="210" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
