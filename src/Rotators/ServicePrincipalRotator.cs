@@ -3,6 +3,7 @@
 // </copyright>
 
 using System;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +16,7 @@ namespace Microsoft.KeyVault
     public class ServicePrincipalRotator : SecretRotator
     {
         public const string SecretType = "ServicePrincipal";
+        public const string SecretDisplayName = "Automatic Key Rotation Version";
 
         protected override async Task<string> GenerateSecret(ISecret secret, ILogger log)
         {
@@ -40,9 +42,23 @@ namespace Microsoft.KeyVault
 
             var passwordCredential = new PasswordCredential
             {
-                DisplayName = "Automatic Key Rotation Version",
+                DisplayName = SecretDisplayName,
                 EndDateTime = DateTimeOffset.UtcNow.AddDays(int.Parse(secret.ExpiresInDays)),
             };
+            Application application = await graphServiceClient.Applications[secret.ResourceName].Request().GetAsync();
+            try
+            {
+                foreach (PasswordCredential password in application.PasswordCredentials.Where(t => t.EndDateTime < DateTimeOffset.UtcNow && t.DisplayName == SecretDisplayName).ToList())
+                {
+                    log.LogInformation($"Deleting Expired Key Secret on {secret.ResourceName}: {password.KeyId}");
+                    await graphServiceClient.Applications[secret.ResourceName].RemovePassword(password.KeyId ?? Guid.Empty).Request().PostAsync();
+                }
+            }
+            catch
+            {
+                log.LogWarning("Error deleting expired Key Secrets");
+            }
+
             var servicePrincipalKey = await graphServiceClient.Applications[secret.ResourceName].AddPassword(passwordCredential).Request().PostAsync();
             return servicePrincipalKey.SecretText;
         }
