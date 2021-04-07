@@ -17,7 +17,8 @@ namespace Microsoft.KeyVault
         private const string SubscriptionIdTagKey = "SubscriptionId";
         private const string ValidityPeriodDaysTagKey = "ValidityPeriodDays";
         private const string ExpiresInDaysTagKey = "ExpiresInDays";
-        private KeyVaultSecret keyVaultSecret;
+
+        private readonly KeyVaultSecret keyVaultSecret;
 
         public Secret(string secretName, string keyVaultName)
         {
