@@ -68,6 +68,7 @@ namespace Microsoft.KeyVault
             }
 
             newSecret.Properties.ExpiresOn = DateTime.UtcNow.AddDays(int.Parse(secret.ValidityPeriodDays));
+            newSecret.Properties.NotBefore = DateTime.UtcNow;
             secret.Client.SetSecret(newSecret);
         }
     }

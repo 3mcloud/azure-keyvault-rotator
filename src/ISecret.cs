@@ -9,15 +9,16 @@ public interface ISecret
     {
         SecretClient Client { get; }
 
+        string Name { get; }
+
         IDictionary<string, string> Tags { get; }
 
+        // The following values are custom tags we apply as metadata for the secret rotation
         string Type { get; }
 
         string ValidityPeriodDays { get; }
 
         string ExpiresInDays { get; }
-
-        string Name { get; }
 
         string ResourceName { get; }
 
